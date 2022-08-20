@@ -33,7 +33,7 @@ class App extends StatelessWidget {
 }
 
 final GoRouter _router = GoRouter(
-  initialLocation: '/database',
+  initialLocation: '/',
   routes: <GoRoute>[
     GoRoute(
       path: '/',
