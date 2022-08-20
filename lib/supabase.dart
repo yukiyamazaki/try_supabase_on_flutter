@@ -2,6 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract class ISupabaseService {
+  Future<GotrueSessionResponse> signUp({
+    required String email,
+    required String password,
+  });
+  Future<GotrueSessionResponse> signIn({
+    required String email,
+    required String password,
+  });
   Future<void> insertCompany();
   Future<void> getCompany();
   Future<void> getByQueryCompany();
@@ -14,6 +22,22 @@ abstract class ISupabaseService {
 
 class SupabaseService implements ISupabaseService {
   static final client = Supabase.instance.client;
+
+  @override
+  Future<GotrueSessionResponse> signUp({
+    required String email,
+    required String password,
+  }) {
+    return client.auth.signUp(email, password);
+  }
+
+  @override
+  Future<GotrueSessionResponse> signIn({
+    required String email,
+    required String password,
+  }) {
+    return client.auth.signIn(email: email, password: password);
+  }
 
 // INSERT
   @override
