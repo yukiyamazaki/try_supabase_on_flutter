@@ -5,6 +5,7 @@ abstract class ISupabaseService {
   Future<void> insertCompany();
   Future<void> getCompany();
   Future<void> getByQueryCompany();
+  Future<void> getByAnotherCompany();
   Future<void> deleteCompany();
   Future<void> updateompany();
 }
@@ -43,7 +44,26 @@ class SupabaseService implements ISupabaseService {
   @override
   Future<void> getByQueryCompany() async {
     try {
-      final res = await client.from('companies').select('*').execute();
+      final res = await client
+          .from('companies')
+          .select('*')
+          .like('name', '%te%')
+          .execute();
+      debugPrint('レスポンス:${res.data}');
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
+// GET BY ANOTHER
+  @override
+  Future<void> getByAnotherCompany() async {
+    try {
+      final res = await client
+          .from('companies')
+          .select('*')
+          .like('name', '%te%')
+          .execute();
       debugPrint('レスポンス:${res.data}');
     } catch (e) {
       debugPrint(e.toString());
@@ -75,6 +95,7 @@ class SupabaseService implements ISupabaseService {
       debugPrint(e.toString());
     }
   }
+
 // REALTIME
 
 }

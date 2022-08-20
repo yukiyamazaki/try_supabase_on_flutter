@@ -53,29 +53,48 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             ElevatedButton(
               onPressed: supabase.insertCompany,
-              child: const Text('Insert data in supabase.'),
-            ),
-            ElevatedButton(
-              onPressed: supabase.getCompany,
-              child: const Text('Get data in supabase.'),
+              style: ButtonStyle(
+                backgroundColor:
+                    MaterialStateProperty.all<Color>(Colors.blueAccent),
+              ),
+              child: const Text('Insert data.'),
             ),
             ElevatedButton(
               onPressed: supabase.getCompany,
               style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
+              ),
+              child: const Text('Get data.'),
+            ),
+            ElevatedButton(
+              onPressed: supabase.getByQueryCompany,
+              style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<Color>(Colors.amber),
               ),
-              child: const Text('Get data by query in supabase.'),
+              child: const Text('Get data by query.'),
+            ),
+            ElevatedButton(
+              onPressed: supabase.getByQueryCompany,
+              style: ButtonStyle(
+                backgroundColor:
+                    MaterialStateProperty.all<Color>(Colors.amberAccent),
+              ),
+              child: const Text('Get data by another method.'),
             ),
             ElevatedButton(
               onPressed: supabase.updateompany,
-              child: const Text('Update data in supabase.'),
+              style: ButtonStyle(
+                backgroundColor:
+                    MaterialStateProperty.all<Color>(Colors.deepOrange),
+              ),
+              child: const Text('Update data.'),
             ),
             ElevatedButton(
               onPressed: supabase.deleteCompany,
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
               ),
-              child: const Text('Delete data in supabase.'),
+              child: const Text('Delete data.'),
             ),
           ],
         ),
