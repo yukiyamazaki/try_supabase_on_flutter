@@ -91,6 +91,13 @@ class _DatabaseWidgetState extends State<DatabaseWidget> {
               ),
               child: const Text('Upsert chats'),
             ),
+            ElevatedButton(
+              onPressed: supabase.signOut,
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
+              ),
+              child: const Text('Sign out'),
+            ),
             Column(
               children: [
                 const Text(

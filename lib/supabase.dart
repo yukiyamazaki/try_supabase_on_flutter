@@ -10,6 +10,7 @@ abstract class ISupabaseService {
     required String email,
     required String password,
   });
+  Future<GotrueResponse> signOut();
   Future<void> insertCompany();
   Future<void> getCompany();
   Future<void> getByQueryCompany();
@@ -37,6 +38,11 @@ class SupabaseService implements ISupabaseService {
     required String password,
   }) {
     return client.auth.signIn(email: email, password: password);
+  }
+
+  @override
+  Future<GotrueResponse> signOut() {
+    return client.auth.signOut();
   }
 
 // INSERT
