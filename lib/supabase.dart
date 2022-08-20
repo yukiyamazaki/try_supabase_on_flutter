@@ -7,7 +7,9 @@ abstract class ISupabaseService {
   Future<void> getByQueryCompany();
   Future<void> getByAnotherCompany();
   Future<void> deleteCompany();
-  Future<void> updateompany();
+  Future<void> updateCompany();
+  Future<void> upsertChats();
+  Stream<List<Map<String, dynamic>>> streamChatroom();
 }
 
 class SupabaseService implements ISupabaseService {
@@ -17,10 +19,10 @@ class SupabaseService implements ISupabaseService {
   @override
   Future<void> insertCompany() async {
     try {
-      final res = await client.from("companies").insert({
-        "id": "00003",
-        "name": "株式会社test3",
-        "age": 200,
+      final res = await client.from("companies").upsert({
+        "id": 6,
+        "name": "株式会社testoo",
+        "age": 20,
         "is_active": true,
       }).execute();
       debugPrint('レスポンス:${res.status}');
@@ -34,7 +36,7 @@ class SupabaseService implements ISupabaseService {
   Future<void> getCompany() async {
     try {
       final res = await client.from('companies').select('*').execute();
-      debugPrint('レスポンス:${res.data}');
+      debugPrint('レスポンス:${res.status}');
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -49,7 +51,7 @@ class SupabaseService implements ISupabaseService {
           .select('*')
           .like('name', '%te%')
           .execute();
-      debugPrint('レスポンス:${res.data}');
+      debugPrint('レスポンス:${res.status}');
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -64,7 +66,7 @@ class SupabaseService implements ISupabaseService {
           .select('*')
           .like('name', '%te%')
           .execute();
-      debugPrint('レスポンス:${res.data}');
+      debugPrint('レスポンス:${res.status}');
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -74,8 +76,8 @@ class SupabaseService implements ISupabaseService {
   @override
   Future<void> deleteCompany() async {
     try {
-      final res = await client.from('companies').delete().execute();
-      debugPrint('レスポンス:${res.data}');
+      final res = await client.from('chats').delete().eq('id', 2).execute();
+      debugPrint('レスポンス:${res.status}');
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -83,19 +85,35 @@ class SupabaseService implements ISupabaseService {
 
 // UPDATE
   @override
-  Future<void> updateompany() async {
+  Future<void> updateCompany() async {
     try {
       final res = await client
           .from('companies')
           .update({'name': '株式会社updating'})
           .eq('id', '1')
           .execute();
-      debugPrint('レスポンス:${res.data}');
+      debugPrint('レスポンス:${res.status}');
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
+  // INSERT IN CHATS
+  @override
+  Future<void> upsertChats() async {
+    try {
+      final res = await client.from("chats").upsert({
+        "talk": "テスト文面",
+      }).execute();
+      debugPrint('レスポンス:${res.status}');
     } catch (e) {
       debugPrint(e.toString());
     }
   }
 
 // REALTIME
-
+  @override
+  Stream<List<Map<String, dynamic>>> streamChatroom() {
+    return client.from('chats').stream(['id']).execute();
+  }
 }

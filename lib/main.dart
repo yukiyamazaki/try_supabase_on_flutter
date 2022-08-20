@@ -36,11 +36,22 @@ class MyHomePage extends StatefulWidget {
   final String title;
 
   @override
+  @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  late final Stream<List<Map<String, dynamic>>> _chatStream;
+
   final supabase = SupabaseService();
+
+  @override
+  void initState() {
+    // なぜinistState内で定義しないと動かいない？
+    _chatStream = supabase.streamChatroom();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,7 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: const Text('Get data by another method.'),
             ),
             ElevatedButton(
-              onPressed: supabase.updateompany,
+              onPressed: supabase.updateCompany,
               style: ButtonStyle(
                 backgroundColor:
                     MaterialStateProperty.all<Color>(Colors.deepOrange),
@@ -96,9 +107,47 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               child: const Text('Delete data.'),
             ),
+            ElevatedButton(
+              onPressed: supabase.upsertChats,
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
+              ),
+              child: const Text('Upsert chats'),
+            ),
+            Column(
+              children: [
+                const Text(
+                  'Chats roomのListener結果',
+                  style: TextStyle(color: Colors.black),
+                ),
+                StreamBuilder<List<Map<String, dynamic>>>(
+                  stream: _chatStream,
+                  builder: ((context, snapshot) {
+                    final data = snapshot.data;
+                    if (data == null) {
+                      return const Text('データなし');
+                    }
+                    return Text('データ数：${data.length}');
+                  }),
+                ),
+              ],
+            )
           ],
         ),
       ),
     );
   }
+}
+
+class Chat {
+  Chat({
+    required this.id,
+    required this.createdAt,
+    required this.talk,
+  });
+
+  final int id;
+  // ignore: non_constant_identifier_names
+  final DateTime createdAt;
+  final String talk;
 }
