@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:try_supabase_on_flutter/sign_up.dart';
+
 import 'database_widget.dart';
 import 'home.dart';
 import 'sign_in.dart';
@@ -33,7 +34,7 @@ class App extends StatelessWidget {
 }
 
 final GoRouter _router = GoRouter(
-  initialLocation: '/',
+  initialLocation: '/database',
   routes: <GoRoute>[
     GoRoute(
       path: '/',

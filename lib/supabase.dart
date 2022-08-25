@@ -15,6 +15,7 @@ abstract class ISupabaseService {
   Future<void> getCompany();
   Future<void> getByQueryCompany();
   Future<void> getByAnotherCompany();
+  Future<void> getByQueryForeignTablesProducts();
   Future<void> deleteCompany();
   Future<void> updateCompany();
   Future<void> upsertChats();
@@ -52,8 +53,6 @@ class SupabaseService implements ISupabaseService {
       final res = await client.from("companies").upsert({
         "id": 6,
         "name": "株式会社testoo",
-        "age": 20,
-        "is_active": true,
       }).execute();
       debugPrint('レスポンス:${res.status}');
     } catch (e) {
@@ -66,7 +65,7 @@ class SupabaseService implements ISupabaseService {
   Future<void> getCompany() async {
     try {
       final res = await client.from('companies').select('*').execute();
-      debugPrint('レスポンス:${res.status}');
+      debugPrint('レスポンス:${res.data}');
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -79,9 +78,9 @@ class SupabaseService implements ISupabaseService {
       final res = await client
           .from('companies')
           .select('*')
-          .like('name', '%te%')
+          .like('name', '%岡%')
           .execute();
-      debugPrint('レスポンス:${res.status}');
+      debugPrint('レスポンス:${res.data}');
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -97,6 +96,20 @@ class SupabaseService implements ISupabaseService {
           .like('name', '%te%')
           .execute();
       debugPrint('レスポンス:${res.status}');
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
+// GET BY Query foreign tables
+  @override
+  Future<void> getByQueryForeignTablesProducts() async {
+    try {
+      final res = await client
+          .from('products')
+          .select('company_id,companies(name,age)')
+          .execute();
+      debugPrint('レスポンス:${res.data}');
     } catch (e) {
       debugPrint(e.toString());
     }

@@ -70,6 +70,14 @@ class _DatabaseWidgetState extends State<DatabaseWidget> {
               child: const Text('Get data by another method.'),
             ),
             ElevatedButton(
+              onPressed: supabase.getByQueryForeignTablesProducts,
+              style: ButtonStyle(
+                backgroundColor:
+                    MaterialStateProperty.all<Color>(Colors.blueGrey),
+              ),
+              child: const Text('Get data by Query foreign tables.'),
+            ),
+            ElevatedButton(
               onPressed: supabase.updateCompany,
               style: ButtonStyle(
                 backgroundColor:
