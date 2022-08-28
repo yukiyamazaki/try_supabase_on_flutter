@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
+import 'main.dart';
 import 'supabase.dart';
 
 class SignInWidget extends StatelessWidget {
@@ -44,6 +46,8 @@ class SignInWidget extends StatelessWidget {
                     try {
                       await supabase.signIn(email: email, password: password);
                       debugPrint('サインイン成功');
+                      // ignore: use_build_context_synchronously
+                      context.push(RoutePath.database);
                     } catch (e) {
                       debugPrint(e.toString());
                     }

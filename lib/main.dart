@@ -34,31 +34,38 @@ class App extends StatelessWidget {
 }
 
 final GoRouter _router = GoRouter(
-  initialLocation: '/database',
+  initialLocation: RoutePath.home,
   routes: <GoRoute>[
     GoRoute(
-      path: '/',
+      path: RoutePath.home,
       builder: (BuildContext context, GoRouterState state) {
         return const Home();
       },
     ),
     GoRoute(
-      path: '/database',
+      path: RoutePath.database,
       builder: (BuildContext context, GoRouterState state) {
         return const DatabaseWidget();
       },
     ),
     GoRoute(
-      path: '/sign_up',
+      path: RoutePath.signUp,
       builder: (BuildContext context, GoRouterState state) {
         return const SignUpWidget();
       },
     ),
     GoRoute(
-      path: '/sign_in',
+      path: RoutePath.signIn,
       builder: (BuildContext context, GoRouterState state) {
         return const SignInWidget();
       },
     ),
   ],
 );
+
+class RoutePath {
+  static const home = '/';
+  static const database = '/database';
+  static const signUp = '/sign_up';
+  static const signIn = '/sign_in';
+}

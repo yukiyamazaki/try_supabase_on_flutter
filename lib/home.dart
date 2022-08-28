@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import 'main.dart';
+
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
 
@@ -16,7 +18,7 @@ class Home extends StatelessWidget {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    context.push('/sign_up');
+                    context.push(RoutePath.signUp);
                   },
                   style: ButtonStyle(
                     backgroundColor:
@@ -26,7 +28,7 @@ class Home extends StatelessWidget {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    context.push('/sign_in');
+                    context.push(RoutePath.signIn);
                   },
                   style: ButtonStyle(
                     backgroundColor:

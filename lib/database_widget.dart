@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:try_supabase_on_flutter/main.dart';
 
 import 'supabase.dart';
 
@@ -100,7 +101,15 @@ class _DatabaseWidgetState extends State<DatabaseWidget> {
               child: const Text('Upsert chats'),
             ),
             ElevatedButton(
-              onPressed: supabase.signOut,
+              onPressed: () async {
+                try {
+                  supabase.signOut();
+                  debugPrint('サインアウト成功');
+                  context.push(RoutePath.home);
+                } catch (e) {
+                  debugPrint(e.toString());
+                }
+              },
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
               ),

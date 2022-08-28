@@ -49,12 +49,15 @@ class SupabaseService implements ISupabaseService {
 // INSERT
   @override
   Future<void> insertCompany() async {
+    final session = client.auth.session();
+    debugPrint(session.toString());
     try {
-      final res = await client.from("companies").upsert({
-        "id": 6,
-        "name": "株式会社testoo",
+      final res = await client.from("tenants").upsert({
+        "name": "株式会社テストA",
+        "created_at": DateTime.now().toIso8601String(),
+        "updated_at": DateTime.now().toIso8601String(),
       }).execute();
-      debugPrint('レスポンス:${res.status}');
+      debugPrint('レスポンス:${res.error}');
     } catch (e) {
       debugPrint(e.toString());
     }
